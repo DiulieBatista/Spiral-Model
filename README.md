@@ -9,11 +9,9 @@
 ## Integrantes 
 * **Alice Virgília Andrade**
 * **Bruo Maia Santos**
-* **Diulie Mileide Batista Correia**
-* 
+* **Diulie Mileide Batista Correia** 
 ------
  * **Repositório do Grupo 01 para estudo da metodologia Spiral Model.  O projeto apresenta análise da metodologia, características, vantagens e desvantagens, ferramentas associadas e exemplos de aplicação em projetos de desenvolvimento de software.  Inclui documento técnico em PDF e materiais da apresentação.**
-
 
 ----
 
@@ -115,5 +113,17 @@ Qualidade maior
 Envolvimento do cliente
 
 * O cliente acompanha o desenvolvimento de perto.
+-------
+# 7. Desvantagens do Spiral Model
+
+* Alto custo:  Pode ser caro para projetos pequenos.
+* Complexidade de gestão : Exige planejamento detalhado e especialistas.
+* Não indicado para projetos simples : Modelos mais simples podem ser mais eficientes.
+* Difícil estimar tempo total:Como há várias iterações, o prazo pode variar.
+
+--------
+
+
+
 
 
