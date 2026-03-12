@@ -97,3 +97,23 @@ Ferramentas comuns de engenharia de software.
 ### Modelagem
 .Lucidchart
 .draw.io
+
+------
+
+## 6. Vantagens do Spiral Model
+
+
+* Forte controle de riscos
+
+* Permite identificar problemas antes que eles se tornem críticos.
+Flexibilidade
+
+* Requisitos podem ser ajustados ao longo do projeto.
+Qualidade maior
+
+* Cada ciclo inclui testes e validação.
+Envolvimento do cliente
+
+* O cliente acompanha o desenvolvimento de perto.
+
+
