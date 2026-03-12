@@ -1,14 +1,18 @@
 # Spiral-Model
 
+## Instituição De Ensino 
+* **Serviço Nacional de Aprendizagem Industrial (SENAI)**
+-----------
 ## Instrutor 
 * **Frederico Martins Aguiar**
-
+--------
 ## Integrantes 
 * **Alice Virgília Andrade**
-* **Bruno Maia Santos**
+* **Bruo Maia Santos**
 * **Diulie Mileide Batista Correia**
-
-## Repositório do Grupo 01 para estudo da metodologia Spiral Model.  O projeto apresenta análise da metodologia, características, vantagens e desvantagens, ferramentas associadas e exemplos de aplicação em projetos de desenvolvimento de software.  Inclui documento técnico em PDF e materiais da apresentação.
+* 
+------
+ * **Repositório do Grupo 01 para estudo da metodologia Spiral Model.  O projeto apresenta análise da metodologia, características, vantagens e desvantagens, ferramentas associadas e exemplos de aplicação em projetos de desenvolvimento de software.  Inclui documento técnico em PDF e materiais da apresentação.**
 
 
 ----
@@ -28,7 +32,7 @@ planejamento
 - avaliação com o cliente
 
 Ou seja, o projeto evolui gradualmente, sempre avaliando riscos antes de avançar.
-
+-----
 ## 2. Características Principais
 As principais características do Spiral Model são:
 **Desenvolvimento em ciclos**
@@ -42,7 +46,7 @@ Cada ciclo pode gerar protótipos ou novas funcionalidades.
 **Flexibilidade**
 Permite ajustes ao longo do projeto.
 
-
+-----
 ## 3. Como funciona o Modelo Espiral
 Cada volta da espiral possui quatro etapas principais:
  Planejamento
@@ -55,7 +59,7 @@ Desenvolvimento e testes das funcionalidades.
 O cliente valida o que foi produzido.
 Depois disso, inicia-se uma nova espiral, aprimorando o sistema.
 
-
+-----
 ## 4. Tipos de Projetos Mais Adequados
 O Spiral Model é mais indicado para projetos:
 Grandes, que exigem validação frequente, com requisitos que podem mudar
@@ -66,3 +70,30 @@ Exemplos comuns:
 - Softwares corporativos grandes
 
 - plataformas complexas de TI
+  
+-----
+
+
+## 5. Ferramentas 
+Ferramentas comuns de engenharia de software.
+
+### Gestão de projeto
+
+.Jira
+.Trello
+.Asana
+
+### Controle de versão
+
+.Git
+.GitHub
+.GitLab
+
+### Integração contínua
+
+.Jenkins
+.Travis CI
+
+### Modelagem
+.Lucidchart
+.draw.io
