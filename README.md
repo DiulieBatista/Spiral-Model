@@ -41,3 +41,28 @@ O cliente avalia cada versão intermediária do sistema.
 Cada ciclo pode gerar protótipos ou novas funcionalidades.
 **Flexibilidade**
 Permite ajustes ao longo do projeto.
+
+
+## 3. Como funciona o Modelo Espiral
+Cada volta da espiral possui quatro etapas principais:
+ Planejamento
+Definição de objetivos e funcionalidades da próxima etapa.
+ Análise de riscos
+Avaliação de possíveis problemas técnicos ou de negócio.
+ Engenharia
+Desenvolvimento e testes das funcionalidades.
+ Avaliação do cliente
+O cliente valida o que foi produzido.
+Depois disso, inicia-se uma nova espiral, aprimorando o sistema.
+
+
+## 4. Tipos de Projetos Mais Adequados
+O Spiral Model é mais indicado para projetos:
+Grandes, que exigem validação frequente, com requisitos que podem mudar
+Exemplos comuns:
+
+- Sistemas de Gestão
+
+- Softwares corporativos grandes
+
+- plataformas complexas de TI
