@@ -159,3 +159,22 @@ O modelo Waterfall é rígido e sequencial, enquanto o Spiral é iterativo e foc
 Kanban:
 
 O modelo Spiral foca na gestão detalhada de riscos através de ciclos iterativos, enquanto o Agile prioriza entregas rápidas e incrementais para responder rapidamente às mudanças. Diferente da estrutura controlada da espiral, o Agile aposta na flexibilidade máxima para evoluir o produto conforme o feedback contínuo do cliente.
+
+
+-----------
+## Conclusão:
+
+* O Spiral Model é uma metodologia poderosa para projetos complexos. Ele combina planejamento estruturado com desenvolvimento iterativo, garantindo maior controle de riscos e qualidade no produto final. Apesar de ser mais complexo e custoso, é extremamente útil em projetos onde falhas podem gerar grandes impactos.
+Por isso, continua sendo uma referência importante na engenharia de software moderna.
+
+## Caso de Uso:
+<div align="center">
+<img src="Imagens/empresa_IBM.jpg" alt="Descrição" width="300"/>
+</div>
+
+A empresa popular que utilizou princípios do Spiral Model foi a IBM.
+Softwares exemplos:
+## IBM Rational Suite:
+* Ele integra soluções para gestão de requisitos, modelagem visual, desenvolvimento, teste e controle de mudanças, visando aumentar a qualidade, reduzir custos e riscos.
+## IBM WebSphere:
+* Ele funciona como uma base robusta para conectar aplicações, serviços e dados, sendo amplamente utilizado por empresas para rodar sistemas críticos de alto desempenho.
