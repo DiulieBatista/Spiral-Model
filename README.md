@@ -122,8 +122,11 @@ Envolvimento do cliente
 * Difícil estimar tempo total:Como há várias iterações, o prazo pode variar.
 
 --------
-
-
-
-
-
+# 7. Desvantagens do Spiral Model
+O Spiral Model é utilizado em projetos com alto risco tecnológico.
+Exemplos:
+## Sistema Operacional ##
+* Organizações como a NASA utilizam processos iterativos com análise de risco.
+<div align="center">
+<img src="Imagens/sistema_operacional.jpg" alt="Descrição" width="300"/>
+</div>
