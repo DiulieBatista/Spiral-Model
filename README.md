@@ -178,3 +178,10 @@ Softwares exemplos:
 * Ele integra soluções para gestão de requisitos, modelagem visual, desenvolvimento, teste e controle de mudanças, visando aumentar a qualidade, reduzir custos e riscos.
 ## IBM WebSphere:
 * Ele funciona como uma base robusta para conectar aplicações, serviços e dados, sendo amplamente utilizado por empresas para rodar sistemas críticos de alto desempenho.
+
+-----------
+## Referências Bibliográficas:
+
+* https://diversedaily.com/exploring-the-spiral-model-combining-waterfall-and-iterative-development-with-emphasis-on-risk-management-and-incremental-releases/?utm_source=chatgpt.com
+* https://en.wikipedia.org/wiki/Spiral_model
+* https://blog.logrocket.com/product-management/risk-driven-development-with-the-spiral-model/
