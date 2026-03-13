@@ -122,7 +122,7 @@ Envolvimento do cliente
 * Difícil estimar tempo total:Como há várias iterações, o prazo pode variar.
 
 --------
-# 7. Exemplos de Aplicação no Mundo Real
+# 8. Exemplos de Aplicação no Mundo Real
 O Spiral Model é utilizado em projetos com alto risco tecnológico.
 Exemplos:
 ## Sistema Operacional ##
