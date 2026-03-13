@@ -122,7 +122,7 @@ Envolvimento do cliente
 * Difícil estimar tempo total:Como há várias iterações, o prazo pode variar.
 
 --------
-# 7. Desvantagens do Spiral Model
+# 7. Exemplos de Aplicação no Mundo Real
 O Spiral Model é utilizado em projetos com alto risco tecnológico.
 Exemplos:
 ## Sistema Operacional ##
@@ -130,3 +130,32 @@ Exemplos:
 <div align="center">
 <img src="Imagens/sistema_operacional.jpg" alt="Descrição" width="300"/>
 </div>
+
+
+
+## Sistemas de defesa ##
+* Projetos militares costumam usar modelos baseados no Spiral Model.
+<div align="center">
+<img src="Imagens/sistema_de_defesa.png" alt="Descrição" width="300"/>
+</div>
+
+
+## Grandes softwares corporativos ##
+* Empresas como IBM utilizam abordagens iterativas inspiradas nesse modelo.
+<div align="center">
+<img src="Imagens/software-para-arquitetos-corporativos-.webp" alt="Descrição" width="300"/>
+</div>
+
+
+# 9. Comparação com Outras Metodologias
+Cascata (Waterfall):
+
+O modelo Waterfall é estritamente sequencial, exigindo que cada fase seja concluída antes da próxima. Já o modelo Spiral é iterativo, permitindo refinamentos contínuos através de ciclos de prototipagem e análise de riscos. Essa diferença torna a espiral muito mais adaptável a mudanças do que a rigidez da cascata.
+
+Agile:
+
+O modelo Waterfall é rígido e sequencial, enquanto o Spiral é iterativo e focado em riscos. Já os métodos ágeis, como o Scrum, são ainda mais flexíveis e rápidos, priorizando entregas incrementais e adaptação constante às necessidades do cliente.
+
+Kanban:
+
+O modelo Spiral foca na gestão detalhada de riscos através de ciclos iterativos, enquanto o Agile prioriza entregas rápidas e incrementais para responder rapidamente às mudanças. Diferente da estrutura controlada da espiral, o Agile aposta na flexibilidade máxima para evoluir o produto conforme o feedback contínuo do cliente.
