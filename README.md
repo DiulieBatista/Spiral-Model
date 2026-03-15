@@ -17,7 +17,7 @@
 ## Barry Boehm
 
 <div align="center">
-<img src="Imagens/WhatsApp Image 2026-03-15 at 14.54.30.jpeg" alt="Descrição" width="300"/>
+<img src="Imagens/WhatsApp Image 2026-03-15 at 14.54.30.jpeg" alt="Descrição" width="800"/>
 </div>
 
 Barry W. Boehm (1935–2022) foi um engenheiro de software e cientista da computação norte-americano, reconhecido como um dos fundadores da engenharia de software moderna. Seu trabalho influenciou profundamente a estimativa de custos, o gerenciamento de riscos e os modelos de ciclo de vida de software.
@@ -57,9 +57,9 @@ Waterfall Model (modelo em cascata)
 A principal característica do modelo espiral é que o desenvolvimento ocorre em ciclos repetitivos chamados de espirais, onde cada ciclo envolve:
 planejamento
 
-- análise de riscos
-- desenvolvimento
-- avaliação com o cliente
+* análise de riscos
+* desenvolvimento
+*  avaliação com o cliente
 Ou seja, o projeto evolui gradualmente, sempre avaliando riscos antes de avançar.
 -----
 ## 2. Características Principais
@@ -86,13 +86,13 @@ Cada ciclo da espiral representa uma fase do projeto e é dividido em quatro eta
 
 Nesta fase são definidos:
 
-objetivos do ciclo
+* objetivos do ciclo
 
-funcionalidades a serem desenvolvidas
+* funcionalidades a serem desenvolvidas
 
-recursos necessários
+* recursos necessários
 
-cronograma de execução
+* cronograma de execução
 
 O planejamento é fundamental para orientar as próximas etapas do desenvolvimento.
 
@@ -100,13 +100,13 @@ O planejamento é fundamental para orientar as próximas etapas do desenvolvimen
 
 Esta é uma das etapas mais importantes do modelo espiral. Nela são identificados e avaliados possíveis riscos relacionados ao projeto, como:
 
-riscos técnicos
+* riscos técnicos
 
-riscos financeiros
+* riscos financeiros
 
-riscos de prazo
+* riscos de prazo
 
-riscos operacionais
+* riscos operacionais
 
 Caso um risco significativo seja identificado, podem ser criados protótipos ou estudos adicionais para avaliar soluções antes da implementação completa.
 
@@ -114,13 +114,13 @@ Caso um risco significativo seja identificado, podem ser criados protótipos ou 
 
 A fase de engenharia envolve:
 
-desenvolvimento do software
+* desenvolvimento do software
 
-implementação das funcionalidades
+* implementação das funcionalidades
 
-testes de software
+* testes de software
 
-integração de componentes
+* integração de componentes
 
 Essa etapa transforma o planejamento em resultados concretos dentro do sistema.
 
@@ -136,11 +136,11 @@ O Spiral Model é mais indicado para projetos:
 Grandes, que exigem validação frequente, com requisitos que podem mudar
 Exemplos comuns:
 
-- Sistemas de Gestão
+* Sistemas de Gestão
 
-- Softwares corporativos grandes
+* Softwares corporativos grandes
 
-- plataformas complexas de TI
+* plataformas complexas de TI
   
 -----
 
@@ -198,10 +198,12 @@ Envolvimento do cliente
 # 8. Exemplos de Aplicação no Mundo Real
 O Spiral Model é utilizado em projetos com alto risco tecnológico.
 Exemplos:
+
 ## Sistema Operacional ##
 * Organizações como a NASA utilizam processos iterativos com análise de risco.
+  
 <div align="center">
-<img src="Imagens/sistema_operacional.jpg" alt="Descrição" width="300"/>
+<img src="Imagens/sistema_operacional.jpg" alt="Descrição" width="600"/>
 </div>
 
 
@@ -209,14 +211,15 @@ Exemplos:
 ## Sistemas de defesa ##
 * Projetos militares costumam usar modelos baseados no Spiral Model.
 <div align="center">
-<img src="Imagens/sistema_de_defesa.png" alt="Descrição" width="300"/>
+<img src="Imagens/sistema_de_defesa.png" alt="Descrição" width="600"/>
 </div>
 
 
 ## Grandes softwares corporativos ##
 * Empresas como IBM utilizam abordagens iterativas inspiradas nesse modelo.
+  
 <div align="center">
-<img src="Imagens/software-para-arquitetos-corporativos-.webp" alt="Descrição" width="300"/>
+<img src="Imagens/software-para-arquitetos-corporativos-.webp" alt="Descrição" width="600"/>
 </div>
 
 
@@ -242,7 +245,7 @@ Por isso, continua sendo uma referência importante na engenharia de software mo
 
 ## Caso de Uso:
 <div align="center">
-<img src="Imagens/empresa_IBM.jpg" alt="Descrição" width="300"/>
+<img src="Imagens/empresa_IBM.jpg" alt="Descrição" width="600"/>
 </div>
 
 A empresa popular que utilizou princípios do Spiral Model foi a IBM.
