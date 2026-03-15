@@ -14,6 +14,38 @@
  * **Repositório do Grupo 01 para estudo da metodologia Spiral Model.  O projeto apresenta análise da metodologia, características, vantagens e desvantagens, ferramentas associadas e exemplos de aplicação em projetos de desenvolvimento de software.  Inclui documento técnico em PDF e materiais da apresentação.**
 
 ----
+## Barry Boehm
+
+
+
+
+
+Barry W. Boehm (1935–2022) foi um engenheiro de software e cientista da computação norte-americano, reconhecido como um dos fundadores da engenharia de software moderna. Seu trabalho influenciou profundamente a estimativa de custos, o gerenciamento de riscos e os modelos de ciclo de vida de software.
+
+### Principais fatos
+Nascimento: 16 de maio de 1935, EUA
+
+Falecimento: 20 de agosto de 2022, Santa Monica, Califórnia
+
+Instituições: University of Southern California, RAND Corporation, TRW Inc., DARPA
+
+Modelos notáveis: COCOMO, Modelo Espiral de Desenvolvimento de Software
+
+Livro seminal: Software Engineering Economics (1981)
+
+### Contribuições e legado
+Boehm revolucionou a disciplina ao propor o Constructive Cost Model (COCOMO), o primeiro método amplamente adotado para estimar custos e prazos de projetos de software com base em dados empíricos. O modelo possibilitou melhor controle de cronogramas e orçamentos em sistemas complexos, tornando-se referência global por décadas.
+
+Ele também criou o Modelo Espiral de Ciclo de Vida, um paradigma iterativo que combina desenvolvimento incremental e gerenciamento de riscos, influenciando práticas ágeis e processos modernos de engenharia de sistemas.
+
+Carreira acadêmica e prêmios
+Professor distinto na Universidade do Sul da Califórnia, Boehm dirigiu o Center for Systems and Software Engineering e orientou mais de quarenta doutorandos. Foi eleito membro da National Academy of Engineering (1996) e fellow do IEEE, ACM e INCOSE. Recebeu prêmios como o IEEE Simon Ramo Medal (2010) e o INCOSE Pioneer Award (2019) 
+.
+
+### Influência e memória
+Conhecido por sua generosidade intelectual e entusiasmo docente, Boehm moldou gerações de engenheiros e pesquisadores. Seu legado continua vivo por meio do Boehm Center for Systems and Software Engineering, dedicado à pesquisa em práticas e estimativas de desenvolvimento de sistemas
+
+
 
 ## 1. Definição do Spiral Model
 
