@@ -148,7 +148,7 @@ Exemplos comuns:
 * SOFTWARES CORPORATIVOS GRANDES
   
   
-  * PLATAFORMAS COMPLEXAS DE TI 
+* PLATAFORMAS COMPLEXAS DE TI 
  
 -----
 
@@ -156,8 +156,6 @@ Exemplos comuns:
 # 5. Ferramentas 
 
 Ferramentas comuns de engenharia de software.
-
-
 
 |FASE DO CICLO |FERRAMENTAS EXEMPLOS   |FINALIDADE TÉCNICA |
 |-------|----|----------------|
