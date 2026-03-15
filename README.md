@@ -57,21 +57,28 @@ Waterfall Model (modelo em cascata)
 A principal característica do modelo espiral é que o desenvolvimento ocorre em ciclos repetitivos chamados de espirais, onde cada ciclo envolve:
 planejamento
 
-* análise de riscos
-* desenvolvimento
-*  avaliação com o cliente
+* ANALISE DE RISCOS 
+* DESENVILVIMENTO 
+* AVALIAÇÃO COM CLIENTE 
+  
 Ou seja, o projeto evolui gradualmente, sempre avaliando riscos antes de avançar.
+
 -----
 # 2. Características Principais
 As principais características do Spiral Model são:
+
 **Desenvolvimento em ciclos**
 O projeto evolui em várias voltas da espiral, cada uma produzindo melhorias.
+
 **Foco na análise de risco**
 Antes de desenvolver algo novo, o time analisa riscos técnicos, financeiros e operacionais.
+
 **Feedback constante**
 O cliente avalia cada versão intermediária do sistema.
+
 **Iteração contínua**
 Cada ciclo pode gerar protótipos ou novas funcionalidades.
+
 **Flexibilidade**
 Permite ajustes ao longo do projeto.
 
@@ -86,13 +93,13 @@ Cada ciclo da espiral representa uma fase do projeto e é dividido em quatro eta
 
 Nesta fase são definidos:
 
-* objetivos do ciclo
+* OBJETIVOS DO CLICLO 
 
-* funcionalidades a serem desenvolvidas
+* FUNCIONALIADES A SER DESENVOLVIDAS 
 
-* recursos necessários
+* RESCURSOS NECESSARIOS 
 
-* cronograma de execução
+* CRONOGRAMA DE EXERCUSÃO 
 
 O planejamento é fundamental para orientar as próximas etapas do desenvolvimento.
 
@@ -100,13 +107,13 @@ O planejamento é fundamental para orientar as próximas etapas do desenvolvimen
 
 Esta é uma das etapas mais importantes do modelo espiral. Nela são identificados e avaliados possíveis riscos relacionados ao projeto, como:
 
-* riscos técnicos
+* RISCOS TÉCNICOS 
 
-* riscos financeiros
+* RISCOS FINANCEIROS 
 
-* riscos de prazo
-
-* riscos operacionais
+* RISCOS DE PRAZOS 
+  
+* RISCOS OPERACIONAIS 
 
 Caso um risco significativo seja identificado, podem ser criados protótipos ou estudos adicionais para avaliar soluções antes da implementação completa.
 
@@ -114,13 +121,13 @@ Caso um risco significativo seja identificado, podem ser criados protótipos ou 
 
 A fase de engenharia envolve:
 
-* desenvolvimento do software
+* DESENVOLVIMENTO DE SOFTWARE 
 
-* implementação das funcionalidades
+* IMPLEMENTAÇÃO DAS FUNCIONALIDADES 
 
-* testes de software
+* TESTES DE SOFTWARE 
 
-* integração de componentes
+* INTEGRAÇÃO DE COMPONENTES 
 
 Essa etapa transforma o planejamento em resultados concretos dentro do sistema.
 
@@ -136,12 +143,13 @@ O Spiral Model é mais indicado para projetos:
 Grandes, que exigem validação frequente, com requisitos que podem mudar
 Exemplos comuns:
 
-* Sistemas de Gestão
+* SISTEMAS DE GESTÃO 
 
-* Softwares corporativos grandes
-
-* plataformas complexas de TI
+* SOFTWARES CORPORATIVOS GRANDES
   
+  
+  * PLATAFORMAS COMPLEXAS DE TI 
+ 
 -----
 
 
@@ -149,26 +157,18 @@ Exemplos comuns:
 
 Ferramentas comuns de engenharia de software.
 
-* **Gestão de projeto**
 
-.Jira
-.Trello
-.Asana
 
-* **Controle de versão**
+|FASE DO CICLO |FERRAMENTAS EXEMPLOS   |FINALIDADE TÉCNICA |
+|-------|----|----------------|
+|Planejamento |Jira,Trell, |Gestão de Backlog e definição de Sprints   Iterações |
+|Análise de Risco | Matriz de Riscos (Excel)  |  Cálculo de Probabilidade vs. Impacto de falhas técnicas    |
+|Desenvolvimento   | VS Code / Docker |  Codificação e isolamento de ambientes para prototipagem     |
+|Controle de Versão    | Git / GitHub|  Garantir o histórico de evolução de cada volta da espiral         |
+|Avaliação/QA   | Selenium / Postman | Testes automatizados para validar a versão atual do software        | 
 
-.Git
-.GitHub
-.GitLab
 
-* **Integração contínua**
 
-.Jenkins
-.Travis CI
-
-* **Modelagem**
-.Lucidchart
-.draw.io
 
 ------
 
