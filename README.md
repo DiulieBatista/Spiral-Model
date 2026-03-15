@@ -1,4 +1,4 @@
-# Spiral-Model
+# SPIRAL MODEL 
 
 ## Instituição De Ensino 
 * **Serviço Nacional de Aprendizagem Industrial (SENAI)**
@@ -14,7 +14,7 @@
  * **Repositório do Grupo 01 para estudo da metodologia Spiral Model.  O projeto apresenta análise da metodologia, características, vantagens e desvantagens, ferramentas associadas e exemplos de aplicação em projetos de desenvolvimento de software.  Inclui documento técnico em PDF e materiais da apresentação.**
 
 ----
-## Barry Boehm
+# Barry Boehm
 
 <div align="center">
 <img src="Imagens/WhatsApp Image 2026-03-15 at 14.54.30.jpeg" alt="Descrição" width="800"/>
@@ -47,7 +47,7 @@ Conhecido por sua generosidade intelectual e entusiasmo docente, Boehm moldou ge
 
 
 
-## 1. Definição do Spiral Model
+# 1. Definição do Spiral Model
 
 O Spiral Model foi criado em 1986 pelo engenheiro de software Barry Boehm.
 Ele combina características de dois modelos clássicos:
@@ -62,7 +62,7 @@ planejamento
 *  avaliação com o cliente
 Ou seja, o projeto evolui gradualmente, sempre avaliando riscos antes de avançar.
 -----
-## 2. Características Principais
+# 2. Características Principais
 As principais características do Spiral Model são:
 **Desenvolvimento em ciclos**
 O projeto evolui em várias voltas da espiral, cada uma produzindo melhorias.
@@ -76,7 +76,7 @@ Cada ciclo pode gerar protótipos ou novas funcionalidades.
 Permite ajustes ao longo do projeto.
 
 -----
-## 3. Como funciona o Modelo Espiral
+# 3. Como funciona o Modelo Espiral
 
 O Spiral Model organiza o desenvolvimento em ciclos repetitivos, representados graficamente como uma espiral que cresce progressivamente.
 
@@ -131,7 +131,7 @@ Após o desenvolvimento, o produto é apresentado ao cliente ou às partes inter
 Após a avaliação, inicia-se uma nova volta da espiral, com melhorias e novas funcionalidades.
 
 -----
-## 4. Tipos de Projetos Mais Adequados
+# 4. Tipos de Projetos Mais Adequados
 O Spiral Model é mais indicado para projetos:
 Grandes, que exigem validação frequente, com requisitos que podem mudar
 Exemplos comuns:
@@ -145,33 +145,34 @@ Exemplos comuns:
 -----
 
 
-## 5. Ferramentas 
+# 5. Ferramentas 
+
 Ferramentas comuns de engenharia de software.
 
-### Gestão de projeto
+* **Gestão de projeto**
 
 .Jira
 .Trello
 .Asana
 
-### Controle de versão
+* **Controle de versão**
 
 .Git
 .GitHub
 .GitLab
 
-### Integração contínua
+* **Integração contínua**
 
 .Jenkins
 .Travis CI
 
-### Modelagem
+* **Modelagem**
 .Lucidchart
 .draw.io
 
 ------
 
-## 6. Vantagens do Spiral Model
+# 6. Vantagens do Spiral Model
 
 
 * Forte controle de riscos
@@ -222,23 +223,25 @@ Exemplos:
 <img src="Imagens/software-para-arquitetos-corporativos-.webp" alt="Descrição" width="600"/>
 </div>
 
+----
 
 # 9. Comparação com Outras Metodologias
-Cascata (Waterfall):
+
+### Cascata (Waterfall):
 
 O modelo Waterfall é estritamente sequencial, exigindo que cada fase seja concluída antes da próxima. Já o modelo Spiral é iterativo, permitindo refinamentos contínuos através de ciclos de prototipagem e análise de riscos. Essa diferença torna a espiral muito mais adaptável a mudanças do que a rigidez da cascata.
 
-Agile:
+### Agile:
 
 O modelo Waterfall é rígido e sequencial, enquanto o Spiral é iterativo e focado em riscos. Já os métodos ágeis, como o Scrum, são ainda mais flexíveis e rápidos, priorizando entregas incrementais e adaptação constante às necessidades do cliente.
 
-Kanban:
+### Kanban:
 
 O modelo Spiral foca na gestão detalhada de riscos através de ciclos iterativos, enquanto o Agile prioriza entregas rápidas e incrementais para responder rapidamente às mudanças. Diferente da estrutura controlada da espiral, o Agile aposta na flexibilidade máxima para evoluir o produto conforme o feedback contínuo do cliente.
 
 
 -----------
-## Conclusão:
+# Conclusão:
 
 * O Spiral Model é uma metodologia poderosa para projetos complexos. Ele combina planejamento estruturado com desenvolvimento iterativo, garantindo maior controle de riscos e qualidade no produto final. Apesar de ser mais complexo e custoso, é extremamente útil em projetos onde falhas podem gerar grandes impactos.
 Por isso, continua sendo uma referência importante na engenharia de software moderna.
@@ -256,7 +259,60 @@ Softwares exemplos:
 * Ele funciona como uma base robusta para conectar aplicações, serviços e dados, sendo amplamente utilizado por empresas para rodar sistemas críticos de alto desempenho.
 
 -----------
-## Referências Bibliográficas:
+# Exemplo de Como seria na pratica 
+
+
+Aplicação Prática do Spiral Model em um Projeto de Software
+Este documento demonstra de forma prática como uma equipe poderia organizar um projeto utilizando o modelo espiral de desenvolvimento de software. Cada ciclo (espiral) do projeto inclui planejamento, análise de riscos, desenvolvimento e avaliação.
+
+## 1. Descrição do Projeto
+Projeto exemplo: Sistema de Gestão Hospitalar.
+Objetivo: Criar um sistema que permita cadastrar pacientes, médicos, consultas e gerar relatórios médicos.
+
+### 2. Estrutura do Ciclo Espiral
+Cada espiral do projeto segue quatro etapas principais:
+1. Planejamento
+2. Análise de Riscos
+3. Desenvolvimento
+4. Avaliação do Cliente
+
+  
+### 3. Planejamento da Espiral 1
+Funcionalidade	Responsável	Prazo	Status
+Cadastro de Pacientes	Dev 1	10 dias	Em desenvolvimento
+Cadastro de Médicos	Dev 2	10 dias	Planejado
+
+
+|FUNCIONALIDADE |RESPONSAVEL  | PRAZO  | STATUS |
+|-------|----|----------------|--------|
+|Cadastro de Pacientes | dev   |      10 dias          | Em Desenvolvimento    |
+|Cadastro de Médicos    | dev  |  10 dias              | planejado     |
+
+
+
+### 4. Análise de Riscos
+
+|RISCO  |PROBABILIDADE   | IMPACTO   | SOLUÇÃO |
+|-------|----|----------------|--------|
+|Falha no banco de dados | Média	Alta   |    Criar        | sistema de backup    |
+|Sistema lento   |Baixa	Média |  Otimização              | consultas SQL|
+
+
+### 5. Desenvolvimento
+
+Durante esta etapa os desenvolvedores criam as funcionalidades planejadas, implementam o banco de dados e desenvolvem as interfaces do sistema.
+
+
+### 6. Avaliação do Cliente
+
+O cliente testa o sistema desenvolvido neste ciclo e fornece feedback sobre melhorias necessárias. Essas melhorias serão implementadas na próxima espiral.
+
+### 7. Próxima Espiral
+
+Após a avaliação, inicia-se um novo ciclo do modelo espiral com novas funcionalidades e melhorias baseadas no feedback recebido.
+
+------
+# Referências Bibliográficas:
 
 * https://diversedaily.com/exploring-the-spiral-model-combining-waterfall-and-iterative-development-with-emphasis-on-risk-management-and-incremental-releases/?utm_source=chatgpt.com
 * https://en.wikipedia.org/wiki/Spiral_model
