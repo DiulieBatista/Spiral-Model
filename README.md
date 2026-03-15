@@ -60,7 +60,6 @@ planejamento
 - análise de riscos
 - desenvolvimento
 - avaliação com o cliente
-
 Ou seja, o projeto evolui gradualmente, sempre avaliando riscos antes de avançar.
 -----
 ## 2. Características Principais
@@ -78,16 +77,58 @@ Permite ajustes ao longo do projeto.
 
 -----
 ## 3. Como funciona o Modelo Espiral
-Cada volta da espiral possui quatro etapas principais:
- Planejamento
-Definição de objetivos e funcionalidades da próxima etapa.
- Análise de riscos
-Avaliação de possíveis problemas técnicos ou de negócio.
- Engenharia
-Desenvolvimento e testes das funcionalidades.
- Avaliação do cliente
-O cliente valida o que foi produzido.
-Depois disso, inicia-se uma nova espiral, aprimorando o sistema.
+
+O Spiral Model organiza o desenvolvimento em ciclos repetitivos, representados graficamente como uma espiral que cresce progressivamente.
+
+Cada ciclo da espiral representa uma fase do projeto e é dividido em quatro etapas principais:
+
+### 1. Planejamento
+
+Nesta fase são definidos:
+
+objetivos do ciclo
+
+funcionalidades a serem desenvolvidas
+
+recursos necessários
+
+cronograma de execução
+
+O planejamento é fundamental para orientar as próximas etapas do desenvolvimento.
+
+### 2. Análise de Riscos
+
+Esta é uma das etapas mais importantes do modelo espiral. Nela são identificados e avaliados possíveis riscos relacionados ao projeto, como:
+
+riscos técnicos
+
+riscos financeiros
+
+riscos de prazo
+
+riscos operacionais
+
+Caso um risco significativo seja identificado, podem ser criados protótipos ou estudos adicionais para avaliar soluções antes da implementação completa.
+
+### 3. Engenharia
+
+A fase de engenharia envolve:
+
+desenvolvimento do software
+
+implementação das funcionalidades
+
+testes de software
+
+integração de componentes
+
+Essa etapa transforma o planejamento em resultados concretos dentro do sistema.
+
+### 4. Avaliação
+
+Após o desenvolvimento, o produto é apresentado ao cliente ou às partes interessadas para avaliação. Esse feedback é essencial para verificar se os objetivos do ciclo foram atingidos.
+
+Após a avaliação, inicia-se uma nova volta da espiral, com melhorias e novas funcionalidades.
 
 -----
 ## 4. Tipos de Projetos Mais Adequados
