@@ -16,6 +16,9 @@
 ----
 ## Barry Boehm
 
+<div align="center">
+<img src="Imagens/WhatsApp Image 2026-03-15 at 14.54.30.jpeg" alt="Descrição" width="300"/>
+</div>
 
 Barry W. Boehm (1935–2022) foi um engenheiro de software e cientista da computação norte-americano, reconhecido como um dos fundadores da engenharia de software moderna. Seu trabalho influenciou profundamente a estimativa de custos, o gerenciamento de riscos e os modelos de ciclo de vida de software.
 
