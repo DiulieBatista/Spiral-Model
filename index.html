@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spiral Model — SENAI Grupo 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Syne:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #080a0e;
+  --surface:   #0e1119;
+  --card:      #131722;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.13);
+  --text:      #ddd9cf;
+  --muted:     #636170;
+  --faint:     #2a2d38;
+
+  --blue:   #4a9eff;
+  --teal:   #2ec88a;
+  --amber:  #f5a623;
+  --purple: #9d95f5;
+  --coral:  #f07060;
+
+  --blue-dim:   rgba(74,158,255,0.10);
+  --teal-dim:   rgba(46,200,138,0.10);
+  --amber-dim:  rgba(245,166,35,0.10);
+  --purple-dim: rgba(157,149,245,0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: .5;
+}
+
+/* ── HEADER ───────────────────────────────────── */
+header {
+  position: relative; z-index: 10;
+  padding: 48px 60px 0;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.header-left { padding-bottom: 28px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 10px; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--border2);
+  border-radius: 100px; padding: 5px 14px;
+  margin-bottom: 18px;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 62px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  color: #f0ece2;
+}
+h1 em { font-style: italic; color: var(--amber); }
+
+.header-meta {
+  padding-bottom: 28px;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.header-meta strong { color: var(--text); font-weight: 500; }
+
+/* ── TABS ─────────────────────────────────────── */
+.tabs-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,10,14,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 60px;
+  display: flex; gap: 0;
+  overflow-x: auto;
+}
+.tabs-bar::-webkit-scrollbar { height: 0; }
+
+.tab-btn {
+  flex-shrink: 0;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--muted);
+  padding: 18px 22px;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: #f0ece2; border-bottom-color: var(--amber); }
+
+/* ── CONTENT ──────────────────────────────────── */
+.tab-panel { display: none; animation: fadeUp .35s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(14px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 60px 60px; }
+
+/* ── SECTION TITLE ────────────────────────────── */
+.section-tag {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 700; line-height: 1.15;
+  color: #f0ece2; margin-bottom: 32px;
+}
+.section-title span { color: var(--amber); font-style: italic; }
+
+.lead {
+  font-size: 17px; line-height: 1.75;
+  color: #b0aca4; max-width: 700px;
+  margin-bottom: 48px;
+}
+
+/* ── CARDS GRID ───────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 32px; }
+
+@media(max-width:700px) {
+  .grid-2,.grid-3,.grid-4 { grid-template-columns:1fr; }
+  header { flex-direction:column; align-items:flex-start; gap:16px; }
+  .header-meta { text-align:left; }
+  .container { padding: 40px 24px; }
+  .tabs-bar { padding: 0 16px; }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.card-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; margin-bottom: 14px;
+}
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700;
+  color: #f0ece2; margin-bottom: 8px;
+}
+.card p {
+  font-size: 13px; line-height: 1.65;
+  color: var(--muted);
+}
+
+.card.blue  { border-top: 2px solid var(--blue);   background: linear-gradient(160deg, var(--blue-dim), var(--card)); }
+.card.teal  { border-top: 2px solid var(--teal);   background: linear-gradient(160deg, var(--teal-dim), var(--card)); }
+.card.amber { border-top: 2px solid var(--amber);  background: linear-gradient(160deg, var(--amber-dim), var(--card)); }
+.card.purple{ border-top: 2px solid var(--purple); background: linear-gradient(160deg, var(--purple-dim), var(--card)); }
+.card.coral { border-top: 2px solid var(--coral);  background: linear-gradient(160deg, rgba(240,112,96,.10), var(--card)); }
+
+/* ── PHASE STEPS ──────────────────────────────── */
+.phase-steps { display: flex; flex-direction: column; gap: 0; }
+
+.phase-step {
+  display: flex; gap: 24px; align-items: flex-start;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: padding-left .2s;
+}
+.phase-step:last-child { border-bottom: none; }
+.phase-step:hover { padding-left: 8px; }
+
+.step-num {
+  flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  font-family: 'Playfair Display', serif;
+}
+.step-num.blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid var(--blue); }
+.step-num.teal   { background: var(--teal-dim);   color: var(--teal);   border: 1px solid var(--teal); }
+.step-num.amber  { background: var(--amber-dim);  color: var(--amber);  border: 1px solid var(--amber); }
+.step-num.purple { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple); }
+
+.step-content h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: #f0ece2;
+  margin-bottom: 6px;
+}
+.step-content p { font-size: 14px; line-height: 1.7; color: #8a8680; }
+
+/* ── COMPARISON TABLE ─────────────────────────── */
+.compare-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+.compare-table th {
+  background: var(--faint);
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); padding: 14px 20px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.compare-table th:first-child { border-radius: 10px 0 0 0; }
+.compare-table th:last-child  { border-radius: 0 10px 0 0; }
+
+.compare-table td {
+  padding: 16px 20px; font-size: 13.5px; color: var(--text);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top; line-height: 1.6;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  padding: 3px 10px; border-radius: 100px;
+  text-transform: uppercase;
+}
+.tag.blue   { background: var(--blue-dim);   color: var(--blue); }
+.tag.teal   { background: var(--teal-dim);   color: var(--teal); }
+.tag.amber  { background: var(--amber-dim);  color: var(--amber); }
+.tag.purple { background: var(--purple-dim); color: var(--purple); }
+
+/* ── SPIRAL SVG ───────────────────────────────── */
+.spiral-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+.spiral-wrap svg { width: 100%; height: auto; display: block; }
+
+/* SVG text classes for inline SVG */
+.svgt  { font-family: 'Syne',sans-serif; font-size:14px; font-weight:400; fill:#ddd9cf; }
+.svgts { font-family: 'Syne',sans-serif; font-size:12px; font-weight:300; fill:#636170; }
+.svgth { font-family: 'Syne',sans-serif; font-size:14px; font-weight:500; fill:#ddd9cf; }
+
+@keyframes spin-dash { to { stroke-dashoffset: -60; } }
+@keyframes pdot { 0%,100%{r:5} 50%{r:7.5} }
+.ring1 { animation: spin-dash 6s linear infinite; }
+.ring2 { animation: spin-dash 9s linear infinite; }
+.ring3 { animation: spin-dash 13s linear infinite; }
+.ring4 { animation: spin-dash 18s linear infinite; }
+.pd    { animation: pdot 2s ease-in-out infinite; }
+
+/* ── PRO/CON LIST ─────────────────────────────── */
+.pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+@media(max-width:600px){ .pro-con { grid-template-columns:1fr; } }
+
+.list-block { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.list-block h3 { font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 18px; }
+.list-block.pros h3 { color: var(--teal); }
+.list-block.cons h3 { color: var(--coral); }
+
+.list-block ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.list-block li { font-size: 13.5px; line-height: 1.6; color: var(--text); padding-left: 20px; position: relative; }
+.list-block li::before { position: absolute; left: 0; font-size: 12px; }
+.pros li::before { content: '↑'; color: var(--teal); }
+.cons li::before { content: '↓'; color: var(--coral); }
+
+/* ── TOOL PILLS ───────────────────────────────── */
+.tool-group { margin-bottom: 28px; }
+.tool-group-label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 100px; padding: 7px 16px;
+  font-size: 13px; color: var(--text);
+  transition: border-color .2s, color .2s;
+}
+.pill:hover { border-color: var(--amber); color: var(--amber); }
+.pill-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+/* ── CASE STUDY ───────────────────────────────── */
+.case-hero {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 24px;
+  position: relative; overflow: hidden;
+}
+.case-hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: var(--blue-dim);
+}
+.case-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 900;
+  color: var(--blue); margin-bottom: 12px;
+  position: relative;
+}
+.case-hero h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: #f0ece2; margin-bottom: 12px;
+}
+.case-hero p { font-size: 14px; line-height: 1.75; color: #8a8680; max-width: 600px; }
+
+.case-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 20px;
+  font-size: 12px; font-weight: 500; letter-spacing: .06em;
+  color: var(--blue);
+  border: 1px solid rgba(74,158,255,.3);
+  border-radius: 100px; padding: 8px 18px;
+  text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+.case-link:hover { background: var(--blue-dim); border-color: var(--blue); }
+
+.case-products { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.case-product {
+  background: var(--blue-dim);
+  border: 1px solid rgba(74,158,255,.2);
+  border-radius: 8px; padding: 10px 16px;
+  font-size: 13px; color: var(--blue);
+}
+
+/* ── REFERENCES ───────────────────────────────── */
+.ref-list { display: flex; flex-direction: column; gap: 12px; }
+.ref-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.ref-num {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--faint); display: flex; align-items: center;
+  justify-content: center; font-size: 11px; color: var(--muted);
+}
+.ref-item a {
+  font-size: 13px; color: var(--blue); text-decoration: none;
+  word-break: break-all; line-height: 1.5;
+}
+.ref-item a:hover { text-decoration: underline; }
+
+/* ── COVER TAB ────────────────────────────────── */
+.cover {
+  min-height: calc(100vh - 120px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 60px;
+  position: relative;
+}
+
+.cover-spiral {
+  width: min(420px, 90vw);
+  margin: 0 auto 40px;
+}
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -.03em; color: #f0ece2;
+  margin-bottom: 16px;
+}
+.cover-title em { color: var(--amber); font-style: italic; }
+
+.cover-sub {
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--muted); max-width: 500px;
+  line-height: 1.6; margin-bottom: 40px;
+}
+
+.cover-meta {
+  display: flex; gap: 40px; justify-content: center;
+  flex-wrap: wrap; font-size: 12px; color: var(--muted);
+}
+.cover-meta-item strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 2px; }
+
+/* ── DIVIDER ──────────────────────────────────── */
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 48px 0;
+}
+
+/* ── QUOTE ────────────────────────────────────── */
+.quote {
+  border-left: 3px solid var(--amber);
+  padding: 20px 28px;
+  margin: 32px 0;
+  background: var(--amber-dim);
+  border-radius: 0 10px 10px 0;
+}
+.quote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-style: italic;
+  color: #c8c0a8; line-height: 1.6;
+}
+.quote cite { display: block; margin-top: 10px; font-size: 12px; color: var(--muted); font-style: normal; }
+
+/* ── FOOTER ───────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--muted);
+  position: relative; z-index: 5;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<header>
+  <div class="header-left">
+    <div class="badge"><span class="badge-dot"></span> SENAI — Curso Técnico em Desenvolvimento de Sistemas</div>
+    <h1>Spiral<br><em>Model</em></h1>
+  </div>
+  <div class="header-meta">
+    <strong>Grupo 1</strong><br>
+    Bruno Maia Santos · Diulie · Alice<br>
+    UC: Desenvolvimento de Sistemas<br>
+    Prof. Fred Aguiar<br>
+    12 de Março de 2026
+  </div>
+</header>
+
+<!-- ══ TABS BAR ════════════════════════════════════════ -->
+<nav class="tabs-bar" role="tablist">
+  <button class="tab-btn active" onclick="showTab('capa')">① Capa</button>
+  <button class="tab-btn" onclick="showTab('definicao')">② Definição</button>
+  <button class="tab-btn" onclick="showTab('funcionamento')">③ Funcionamento</button>
+  <button class="tab-btn" onclick="showTab('vantagens')">④ Vantagens &amp; Desvantagens</button>
+  <button class="tab-btn" onclick="showTab('ferramentas')">⑤ Ferramentas</button>
+  <button class="tab-btn" onclick="showTab('comparacao')">⑥ Comparação</button>
+  <button class="tab-btn" onclick="showTab('caso')">⑦ Caso de Uso</button>
+  <button class="tab-btn" onclick="showTab('conclusao')">⑧ Conclusão</button>
+  <button class="tab-btn" onclick="showTab('referencias')">⑨ Referências</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 1 — CAPA
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-capa">
+  <div class="cover">
+    <!-- Spiral SVG mini -->
+    <div class="cover-spiral">
+      <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- Animated halos -->
+        <circle class="ring1" cx="210" cy="210" r="38"  fill="none" stroke="#4a9eff" stroke-width="18" stroke-opacity=".12" stroke-dasharray="18 42"/>
+        <circle class="ring2" cx="210" cy="210" r="76"  fill="none" stroke="#2ec88a" stroke-width="22" stroke-opacity=".10" stroke-dasharray="26 96"/>
+        <circle class="ring3" cx="210" cy="210" r="118" fill="none" stroke="#f5a623" stroke-width="26" stroke-opacity=".09" stroke-dasharray="36 155"/>
+        <circle class="ring4" cx="210" cy="210" r="160" fill="none" stroke="#9d95f5" stroke-width="30" stroke-opacity=".08" stroke-dasharray="50 213"/>
+        <!-- Guide rings -->
+        <circle cx="210" cy="210" r="38"  fill="none" stroke="#4a9eff" stroke-width="0.8" stroke-opacity=".4"/>
+        <circle cx="210" cy="210" r="76"  fill="none" stroke="#2ec88a" stroke-width="0.8" stroke-opacity=".35"/>
+        <circle cx="210" cy="210" r="118" fill="none" stroke="#f5a623" stroke-width="0.8" stroke-opacity=".3"/>
+        <circle cx="210" cy="210" r="160" fill="none" stroke="#9d95f5" stroke-width="0.8" stroke-opacity=".25"/>
+        <!-- Dividers -->
+        <line x1="210" y1="40"  x2="210" y2="380" stroke="rgba(255,255,255,0.06)" stroke-width="0.7"/>
+        <line x1="40"  y1="210" x2="380" y2="210" stroke="rgba(255,255,255,0.06)" stroke-width="0.7"/>
+        <!-- Spiral arcs volta 1 -->
+        <path d="M210,172 A38,38 0 0,1 248,210" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+        <path d="M248,210 A38,38 0 0,1 210,248" fill="none" stroke="#2ec88a" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+        <path d="M210,248 A38,38 0 0,1 172,210" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+        <path d="M172,210 A42,42 0 0,1 210,168"  fill="none" stroke="#9d95f5" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+        <!-- Spiral arcs volta 2 -->
+        <path d="M210,134 A76,76 0 0,1 286,210" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+        <path d="M286,210 A76,76 0 0,1 210,286" fill="none" stroke="#2ec88a" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+        <path d="M210,286 A76,76 0 0,1 134,210" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+        <path d="M134,210 A82,82 0 0,1 210,128"  fill="none" stroke="#9d95f5" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+        <!-- Spiral arcs volta 3 -->
+        <path d="M210,92  A118,118 0 0,1 328,210" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <path d="M328,210 A118,118 0 0,1 210,328" fill="none" stroke="#2ec88a" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <path d="M210,328 A118,118 0 0,1 92,210"  fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <path d="M92,210  A126,126 0 0,1 210,84"  fill="none" stroke="#9d95f5" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <!-- Spiral arcs volta 4 -->
+        <path d="M210,50  A160,160 0 0,1 370,210" fill="none" stroke="#4a9eff" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+        <path d="M370,210 A160,160 0 0,1 210,370" fill="none" stroke="#2ec88a" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+        <path d="M210,370 A160,160 0 0,1 50,210"  fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+        <path d="M50,210  A172,172 0 0,1 210,38"  fill="none" stroke="#9d95f5" stroke-width="2" stroke-linecap="round" opacity=".4" marker-end="url(#arr0)"/>
+        <!-- Milestone dots -->
+        <circle class="pd" cx="248" cy="210" r="4" fill="#2ec88a"/>
+        <circle class="pd" cx="210" cy="248" r="4" fill="#f5a623"/>
+        <circle class="pd" cx="172" cy="210" r="4" fill="#9d95f5"/>
+        <circle class="pd" cx="210" cy="168" r="4" fill="#4a9eff"/>
+        <!-- Phase labels -->
+        <text class="svgts" x="308" y="80"  text-anchor="middle" fill="#4a9eff" font-size="11" opacity=".7">Planejamento</text>
+        <text class="svgts" x="112" y="80"  text-anchor="middle" fill="#2ec88a" font-size="11" opacity=".7">Análise de riscos</text>
+        <text class="svgts" x="112" y="355" text-anchor="middle" fill="#f5a623" font-size="11" opacity=".7">Engenharia</text>
+        <text class="svgts" x="308" y="355" text-anchor="middle" fill="#9d95f5" font-size="11" opacity=".7">Avaliação</text>
+        <!-- Center -->
+        <circle cx="210" cy="210" r="22" fill="#0e1119" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text class="svgts" x="210" y="214" text-anchor="middle" dominant-baseline="central" font-size="9">início</text>
+      </svg>
+    </div>
+
+    <div class="cover-title">Spiral<br><em>Model</em></div>
+    <p class="cover-sub">Metodologia de desenvolvimento baseada em ciclos iterativos que combinam planejamento, análise de riscos, desenvolvimento e avaliação contínua.</p>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>Barry Boehm</strong>Criador, 1986</div>
+      <div class="cover-meta-item"><strong>4 Fases</strong>Por ciclo espiral</div>
+      <div class="cover-meta-item"><strong>Alto risco</strong>Projetos complexos</div>
+      <div class="cover-meta-item"><strong>NASA · IBM</strong>Cases reais</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 2 — DEFINIÇÃO
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-definicao">
+  <div class="container">
+    <p class="section-tag">Definição</p>
+    <h2 class="section-title">O que é o <span>Spiral Model</span>?</h2>
+    <p class="lead">Criado em 1986 por Barry Boehm, o Spiral Model é uma metodologia que combina dois modelos clássicos de desenvolvimento de software, acrescentando um diferencial fundamental: a análise de riscos em cada ciclo.</p>
+
+    <div class="quote">
+      <p>"O Spiral Model combina a natureza sistemática e controlável do modelo cascata com a flexibilidade e adaptabilidade do desenvolvimento iterativo."</p>
+      <cite>— Barry Boehm, 1986</cite>
+    </div>
+
+    <div class="grid-2">
+      <div class="card blue">
+        <div class="card-icon" style="background:var(--blue-dim)">🌊</div>
+        <h3>Waterfall Model</h3>
+        <p>Modelo linear e sequencial. O Spiral herdou dele a estrutura organizada e o planejamento disciplinado entre fases.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon" style="background:var(--teal-dim)">🔁</div>
+        <h3>Iterative Development</h3>
+        <p>Desenvolvimento em ciclos repetitivos. O Spiral herdou dele a capacidade de revisão, melhoria e adaptação contínua.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <p class="section-tag">Características principais</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon" style="background:var(--blue-dim);color:var(--blue)">①</div>
+        <h3>Desenvolvimento em ciclos</h3>
+        <p>O projeto evolui em várias voltas da espiral, cada uma produzindo melhorias incrementais.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:var(--teal-dim);color:var(--teal)">②</div>
+        <h3>Foco na análise de risco</h3>
+        <p>Antes de avançar, o time analisa riscos técnicos, financeiros e operacionais.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:var(--amber-dim);color:var(--amber)">③</div>
+        <h3>Feedback constante</h3>
+        <p>O cliente avalia cada versão intermediária do sistema ao fim de cada ciclo.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:var(--purple-dim);color:var(--purple)">④</div>
+        <h3>Iteração contínua</h3>
+        <p>Cada ciclo pode gerar protótipos ou novas funcionalidades completas.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(240,112,96,.10);color:var(--coral)">⑤</div>
+        <h3>Flexibilidade</h3>
+        <p>Permite ajustes nos requisitos ao longo do projeto sem comprometer a estrutura geral.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,255,255,0.05);color:var(--muted)">⑥</div>
+        <h3>Projetos indicados</h3>
+        <p>Grandes projetos complexos com alto risco técnico e requisitos que mudam com frequência.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 3 — FUNCIONAMENTO
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-funcionamento">
+  <div class="container">
+    <p class="section-tag">Funcionamento</p>
+    <h2 class="section-title">Como o <span>ciclo espiral</span> funciona?</h2>
+    <p class="lead">Cada volta da espiral percorre obrigatoriamente quatro etapas. Ao completá-las, inicia-se uma nova volta com maior maturidade e escopo ampliado.</p>
+
+    <!-- Spiral visual -->
+    <div class="spiral-wrap">
+      <svg viewBox="0 0 680 560" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- Halos -->
+        <circle class="ring1" cx="340" cy="280" r="50"  fill="none" stroke="#4a9eff" stroke-width="20" stroke-opacity=".12" stroke-dasharray="25 55"/>
+        <circle class="ring2" cx="340" cy="280" r="100" fill="none" stroke="#2ec88a" stroke-width="25" stroke-opacity=".10" stroke-dasharray="38 126"/>
+        <circle class="ring3" cx="340" cy="280" r="155" fill="none" stroke="#f5a623" stroke-width="30" stroke-opacity=".09" stroke-dasharray="56 200"/>
+        <circle class="ring4" cx="340" cy="280" r="210" fill="none" stroke="#9d95f5" stroke-width="35" stroke-opacity=".08" stroke-dasharray="80 274"/>
+        <!-- Guides -->
+        <circle cx="340" cy="280" r="50"  fill="none" stroke="#4a9eff" stroke-width="0.8" stroke-opacity=".4"/>
+        <circle cx="340" cy="280" r="100" fill="none" stroke="#2ec88a" stroke-width="0.8" stroke-opacity=".35"/>
+        <circle cx="340" cy="280" r="155" fill="none" stroke="#f5a623" stroke-width="0.8" stroke-opacity=".3"/>
+        <circle cx="340" cy="280" r="210" fill="none" stroke="#9d95f5" stroke-width="0.8" stroke-opacity=".25"/>
+        <!-- Dividers -->
+        <line x1="340" y1="60"  x2="340" y2="500" stroke="rgba(255,255,255,0.06)" stroke-width="0.7"/>
+        <line x1="120" y1="280" x2="560" y2="280" stroke="rgba(255,255,255,0.06)" stroke-width="0.7"/>
+        <!-- Arcs -->
+        <path d="M340,230 A50,50 0 0,1 390,280"  fill="none" stroke="#4a9eff" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+        <path d="M390,280 A50,50 0 0,1 340,330"  fill="none" stroke="#2ec88a" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+        <path d="M340,330 A50,50 0 0,1 290,280"  fill="none" stroke="#f5a623" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+        <path d="M290,280 A55,55 0 0,1 340,225"  fill="none" stroke="#9d95f5" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+        <path d="M340,180 A100,100 0 0,1 440,280" fill="none" stroke="#4a9eff" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+        <path d="M440,280 A100,100 0 0,1 340,380" fill="none" stroke="#2ec88a" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+        <path d="M340,380 A100,100 0 0,1 240,280" fill="none" stroke="#f5a623" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+        <path d="M240,280 A108,108 0 0,1 340,172" fill="none" stroke="#9d95f5" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+        <path d="M340,125 A155,155 0 0,1 495,280" fill="none" stroke="#4a9eff" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+        <path d="M495,280 A155,155 0 0,1 340,435" fill="none" stroke="#2ec88a" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+        <path d="M340,435 A155,155 0 0,1 185,280" fill="none" stroke="#f5a623" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+        <path d="M185,280 A165,165 0 0,1 340,115" fill="none" stroke="#9d95f5" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+        <path d="M340,70  A210,210 0 0,1 550,280" fill="none" stroke="#4a9eff" stroke-width="2.2" stroke-linecap="round" opacity=".4"/>
+        <path d="M550,280 A210,210 0 0,1 340,490" fill="none" stroke="#2ec88a" stroke-width="2.2" stroke-linecap="round" opacity=".4"/>
+        <path d="M340,490 A210,210 0 0,1 130,280" fill="none" stroke="#f5a623" stroke-width="2.2" stroke-linecap="round" opacity=".4"/>
+        <path d="M130,280 A222,222 0 0,1 340,58"  fill="none" stroke="#9d95f5" stroke-width="2.2" stroke-linecap="round" opacity=".4" marker-end="url(#arr1)"/>
+        <!-- Dots -->
+        <circle class="pd" cx="390" cy="280" r="4.5" fill="#2ec88a"/>
+        <circle class="pd" cx="340" cy="330" r="4.5" fill="#f5a623"/>
+        <circle class="pd" cx="290" cy="280" r="4.5" fill="#9d95f5"/>
+        <circle class="pd" cx="340" cy="225" r="4.5" fill="#4a9eff"/>
+        <circle cx="440" cy="280" r="4.5" fill="#2ec88a" opacity=".75"/>
+        <circle cx="340" cy="380" r="4.5" fill="#f5a623" opacity=".75"/>
+        <circle cx="240" cy="280" r="4.5" fill="#9d95f5" opacity=".75"/>
+        <circle cx="340" cy="172" r="4.5" fill="#4a9eff" opacity=".75"/>
+        <!-- Labels -->
+        <text class="svgth" x="490" y="110" text-anchor="middle" fill="#4a9eff" font-size="13" opacity=".75">Planejamento</text>
+        <text class="svgts" x="490" y="128" text-anchor="middle" fill="#4a9eff" font-size="11" opacity=".5">Objetivos e escopo</text>
+        <text class="svgth" x="185" y="110" text-anchor="middle" fill="#2ec88a" font-size="13" opacity=".75">Análise de riscos</text>
+        <text class="svgts" x="185" y="128" text-anchor="middle" fill="#2ec88a" font-size="11" opacity=".5">Identifica ameaças</text>
+        <text class="svgth" x="185" y="460" text-anchor="middle" fill="#f5a623" font-size="13" opacity=".75">Engenharia</text>
+        <text class="svgts" x="185" y="478" text-anchor="middle" fill="#f5a623" font-size="11" opacity=".5">Desenvolve e testa</text>
+        <text class="svgth" x="490" y="460" text-anchor="middle" fill="#9d95f5" font-size="13" opacity=".75">Avaliação</text>
+        <text class="svgts" x="490" y="478" text-anchor="middle" fill="#9d95f5" font-size="11" opacity=".5">Feedback do cliente</text>
+        <!-- Center -->
+        <circle cx="340" cy="280" r="26" fill="#0e1119" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text class="svgts" x="340" y="283" text-anchor="middle" dominant-baseline="central" font-size="9">início</text>
+      </svg>
+    </div>
+
+    <!-- Steps detail -->
+    <div class="phase-steps">
+      <div class="phase-step">
+        <div class="step-num blue">1</div>
+        <div class="step-content">
+          <h4>Planejamento</h4>
+          <p>Definição dos objetivos da próxima etapa, levantamento de requisitos e recursos necessários. É onde o time alinha expectativas com o cliente antes de iniciar o ciclo.</p>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="step-num teal">2</div>
+        <div class="step-content">
+          <h4>Análise de Riscos</h4>
+          <p>Avaliação de possíveis problemas técnicos, financeiros e operacionais. Protótipos podem ser criados para validar hipóteses e reduzir incertezas antes do desenvolvimento completo.</p>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="step-num amber">3</div>
+        <div class="step-content">
+          <h4>Engenharia</h4>
+          <p>Desenvolvimento e testes das funcionalidades planejadas para o ciclo atual. O resultado pode ser um protótipo, uma versão parcial ou um módulo completo do sistema.</p>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="step-num purple">4</div>
+        <div class="step-content">
+          <h4>Avaliação do Cliente</h4>
+          <p>O cliente valida o que foi produzido, fornece feedback e aprova (ou não) o avanço para o próximo ciclo. Esse retorno alimenta o planejamento da próxima espiral.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 4 — VANTAGENS & DESVANTAGENS
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-vantagens">
+  <div class="container">
+    <p class="section-tag">Vantagens &amp; Desvantagens</p>
+    <h2 class="section-title">Pontos <span>fortes e fracos</span></h2>
+    <p class="lead">Como toda metodologia, o Spiral Model brilha em determinados contextos e apresenta limitações em outros. Conhecer ambos é essencial para fazer a escolha certa.</p>
+
+    <div class="pro-con">
+      <div class="list-block pros">
+        <h3>✦ Vantagens</h3>
+        <ul>
+          <li><strong>Forte controle de riscos.</strong> Identifica problemas antes que se tornem críticos, poupando tempo e dinheiro.</li>
+          <li><strong>Flexibilidade.</strong> Requisitos podem ser ajustados ao longo do projeto sem colapsar a estrutura.</li>
+          <li><strong>Qualidade maior.</strong> Cada ciclo inclui testes e validação, aumentando a confiabilidade do produto.</li>
+          <li><strong>Envolvimento do cliente.</strong> O cliente acompanha de perto e participa ativamente das decisões.</li>
+          <li><strong>Adequado para inovação.</strong> Protótipos permitem experimentar sem comprometer o projeto inteiro.</li>
+        </ul>
+      </div>
+      <div class="list-block cons">
+        <h3>✦ Desvantagens</h3>
+        <ul>
+          <li><strong>Alto custo.</strong> A estrutura de múltiplos ciclos pode ser cara para projetos de menor escala.</li>
+          <li><strong>Complexidade de gestão.</strong> Exige planejamento detalhado e equipes experientes na metodologia.</li>
+          <li><strong>Não indicado para projetos simples.</strong> Modelos mais leves são mais eficientes para escopos menores.</li>
+          <li><strong>Prazo difícil de estimar.</strong> A natureza iterativa torna o cronograma final imprevisível.</li>
+          <li><strong>Documentação intensa.</strong> A análise de riscos em cada ciclo gera grande volume de documentação.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <p class="section-tag">Tipos de projetos mais adequados</p>
+
+    <div class="grid-3">
+      <div class="card teal">
+        <h3>Sistemas de Gestão</h3>
+        <p>ERPs e sistemas corporativos grandes com múltiplos módulos e stakeholders.</p>
+      </div>
+      <div class="card blue">
+        <h3>Plataformas de TI</h3>
+        <p>Infraestruturas complexas onde falhas têm alto impacto operacional e financeiro.</p>
+      </div>
+      <div class="card amber">
+        <h3>Softwares corporativos</h3>
+        <p>Aplicações de missão crítica que evoluem continuamente com requisitos dinâmicos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 5 — FERRAMENTAS
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-ferramentas">
+  <div class="container">
+    <p class="section-tag">Ferramentas</p>
+    <h2 class="section-title">Ferramentas <span>comuns</span> no Spiral</h2>
+    <p class="lead">O Spiral Model não exige ferramentas específicas, mas integra-se naturalmente com o ecossistema moderno de engenharia de software.</p>
+
+    <div class="tool-group">
+      <div class="tool-group-label">Gestão de projeto</div>
+      <div class="pills">
+        <div class="pill"><span class="pill-dot" style="background:#4a9eff"></span>Jira</div>
+        <div class="pill"><span class="pill-dot" style="background:#2ec88a"></span>Trello</div>
+        <div class="pill"><span class="pill-dot" style="background:#f5a623"></span>Asana</div>
+      </div>
+    </div>
+
+    <div class="tool-group">
+      <div class="tool-group-label">Controle de versão</div>
+      <div class="pills">
+        <div class="pill"><span class="pill-dot" style="background:#f5a623"></span>Git</div>
+        <div class="pill"><span class="pill-dot" style="background:#9d95f5"></span>GitHub</div>
+        <div class="pill"><span class="pill-dot" style="background:#f07060"></span>GitLab</div>
+      </div>
+    </div>
+
+    <div class="tool-group">
+      <div class="tool-group-label">Integração contínua</div>
+      <div class="pills">
+        <div class="pill"><span class="pill-dot" style="background:#2ec88a"></span>Jenkins</div>
+        <div class="pill"><span class="pill-dot" style="background:#4a9eff"></span>Travis CI</div>
+      </div>
+    </div>
+
+    <div class="tool-group">
+      <div class="tool-group-label">Modelagem e diagramação</div>
+      <div class="pills">
+        <div class="pill"><span class="pill-dot" style="background:#4a9eff"></span>Lucidchart</div>
+        <div class="pill"><span class="pill-dot" style="background:#9d95f5"></span>draw.io</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="grid-4">
+      <div class="card blue">
+        <h3>Planejamento</h3>
+        <p>Jira e Asana permitem estruturar cada espiral como um sprint com épicos e tarefas.</p>
+      </div>
+      <div class="card teal">
+        <h3>Versionamento</h3>
+        <p>Git garante rastreabilidade de cada ciclo com branches por iteração.</p>
+      </div>
+      <div class="card amber">
+        <h3>Entrega contínua</h3>
+        <p>Jenkins automatiza builds e testes ao fim de cada fase de engenharia.</p>
+      </div>
+      <div class="card purple">
+        <h3>Modelagem</h3>
+        <p>Lucidchart e draw.io documentam a arquitetura que evolui a cada espiral.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 6 — COMPARAÇÃO
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-comparacao">
+  <div class="container">
+    <p class="section-tag">Comparação</p>
+    <h2 class="section-title">Spiral vs <span>outras metodologias</span></h2>
+    <p class="lead">Cada metodologia brilha em um contexto específico. Entender as diferenças é essencial para escolher a abordagem certa para cada projeto.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Critério</th>
+          <th>Waterfall</th>
+          <th>Spiral Model</th>
+          <th>Agile (Scrum/Kanban)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Abordagem</strong></td>
+          <td>Linear e sequencial</td>
+          <td>Iterativo e incremental</td>
+          <td>Iterativo e adaptativo</td>
+        </tr>
+        <tr>
+          <td><strong>Gestão de riscos</strong></td>
+          <td>Reativa — identificada tardiamente</td>
+          <td><span class="tag teal">Proativa</span> — em cada ciclo</td>
+          <td>Moderada — via retrospectivas</td>
+        </tr>
+        <tr>
+          <td><strong>Flexibilidade</strong></td>
+          <td>Baixa — mudanças custosas</td>
+          <td>Alta — dentro dos ciclos</td>
+          <td><span class="tag teal">Muito alta</span> — por sprint</td>
+        </tr>
+        <tr>
+          <td><strong>Envolvimento do cliente</strong></td>
+          <td>Início e fim</td>
+          <td>A cada espiral</td>
+          <td>Contínuo</td>
+        </tr>
+        <tr>
+          <td><strong>Velocidade de entrega</strong></td>
+          <td>Entrega única ao final</td>
+          <td>Entregas por ciclo</td>
+          <td><span class="tag teal">Rápida</span> — ciclos curtos (2-4 sem)</td>
+        </tr>
+        <tr>
+          <td><strong>Tamanho de projeto</strong></td>
+          <td>Pequenos/médios</td>
+          <td><span class="tag amber">Grandes e complexos</span></td>
+          <td>Qualquer tamanho</td>
+        </tr>
+        <tr>
+          <td><strong>Documentação</strong></td>
+          <td>Extensa e formal</td>
+          <td>Moderada/extensa</td>
+          <td>Leve — foco em funcionamento</td>
+        </tr>
+        <tr>
+          <td><strong>Custo</strong></td>
+          <td>Previsível</td>
+          <td>Alto — pela análise de riscos</td>
+          <td>Variável por sprint</td>
+        </tr>
+        <tr>
+          <td><strong>Casos típicos</strong></td>
+          <td>Construção civil, projetos físicos</td>
+          <td>NASA, IBM, defesa, aeroespacial</td>
+          <td>Startups, produtos digitais</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid-3" style="margin-top:40px">
+      <div class="card coral">
+        <h3>Waterfall</h3>
+        <p>Melhor para: projetos com requisitos fixos e bem definidos desde o início. Mudanças são muito caras.</p>
+      </div>
+      <div class="card amber">
+        <h3>Spiral Model</h3>
+        <p>Melhor para: projetos grandes e complexos com alto risco técnico. Prioriza segurança sobre velocidade.</p>
+      </div>
+      <div class="card teal">
+        <h3>Agile</h3>
+        <p>Melhor para: produtos que evoluem rápido e precisam de entregas frequentes. Prioriza velocidade.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 7 — CASO DE USO
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-caso">
+  <div class="container">
+    <p class="section-tag">Caso de uso real</p>
+    <h2 class="section-title"><span>IBM</span> e o Spiral Model</h2>
+    <p class="lead">A IBM é um dos casos mais documentados de aplicação de princípios do Spiral Model no desenvolvimento de softwares corporativos de grande escala.</p>
+
+    <div class="case-hero">
+      <div class="case-logo">IBM</div>
+      <h3>IBM Security Verify — Caso real documentado</h3>
+      <p>O IBM Security Verify é uma plataforma de gestão de identidade e acesso desenvolvida em ciclos iterativos com análise de riscos em cada fase — alinhada diretamente aos princípios do Spiral Model. O produto passou por múltiplas iterações de planejamento, prototipação, desenvolvimento e validação com clientes corporativos antes de chegar à versão final.</p>
+      <div class="case-products">
+        <div class="case-product">IBM Rational Suite</div>
+        <div class="case-product">IBM WebSphere</div>
+        <div class="case-product">IBM Security Verify</div>
+      </div>
+      <a class="case-link" href="https://www.ibm.com/br-pt/case-studies/ibm-on-ibm-security-verify" target="_blank">
+        Ver case oficial da IBM →
+      </a>
+    </div>
+
+    <div class="grid-2">
+      <div class="card blue">
+        <h3>IBM Rational Suite</h3>
+        <p>Conjunto de ferramentas desenvolvido com metodologia iterativa, incorporando análise de riscos e prototipação em cada ciclo — princípio central do Spiral Model.</p>
+      </div>
+      <div class="card teal">
+        <h3>IBM WebSphere</h3>
+        <p>Plataforma de middleware corporativo desenvolvida em múltiplos ciclos, cada um incorporando feedback de grandes clientes antes da próxima versão.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <p class="section-tag">Contexto acadêmico</p>
+
+    <div class="quote">
+      <p>"O método Synchronize and Stabilize — usado pela Microsoft — combina as vantagens do Spiral Model com tecnologia para supervisionar código-fonte, permitindo que equipes trabalhem em paralelo com eficiência."</p>
+      <cite>— Cusumano &amp; Selby, MIT/UC Irvine · Communications of the ACM, 1997</cite>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>NASA — Programa Space Shuttle</h3>
+        <p>O software do ônibus espacial nos anos 1970 foi desenvolvido com o Spiral Model para gerenciar alto risco técnico em ciclos gerenciáveis.</p>
+      </div>
+      <div class="card">
+        <h3>Exército dos EUA</h3>
+        <p>O programa Future Combat Systems adotou o Spiral Model para projetos militares com requisitos que evoluíam continuamente.</p>
+      </div>
+      <div class="card">
+        <h3>NASA — Projeto TReK</h3>
+        <p>Sistema de monitoramento da ISS desenvolvido com Spiral Model — documentado na Communications of the ACM em 2002.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 8 — CONCLUSÃO
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-conclusao">
+  <div class="container">
+    <p class="section-tag">Conclusão</p>
+    <h2 class="section-title">O Spiral Model <span>hoje</span></h2>
+    <p class="lead">Criado há quase 40 anos, o Spiral Model permanece uma referência obrigatória na engenharia de software moderna — especialmente em projetos onde uma falha pode custar vidas ou bilhões de dólares.</p>
+
+    <div class="quote">
+      <p>"O Spiral Model é uma metodologia poderosa para projetos complexos. Ele combina planejamento estruturado com desenvolvimento iterativo, garantindo maior controle de riscos e qualidade no produto final."</p>
+      <cite>— Grupo 1, SENAI 2026</cite>
+    </div>
+
+    <div class="grid-2">
+      <div class="card amber">
+        <h3>Legado de Boehm</h3>
+        <p>A ideia central de Boehm — que todo ciclo de desenvolvimento deve começar com análise de riscos — influenciou profundamente o Agile, o DevOps e as práticas modernas de engenharia de software.</p>
+      </div>
+      <div class="card purple">
+        <h3>Relevância atual</h3>
+        <p>Em 2026, o Spiral Model continua sendo o framework de referência para projetos aeroespaciais, de defesa, sistemas críticos de saúde e infraestruturas de TI de grande escala.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon" style="background:var(--blue-dim);color:var(--blue);font-size:20px">1986</div>
+        <h3>Criação</h3>
+        <p>Barry Boehm publica o Spiral Model no IEEE Transactions on Software Engineering.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);font-size:20px">1990s</div>
+        <h3>Adoção</h3>
+        <p>NASA, Exército dos EUA e IBM adotam variantes do modelo em projetos críticos.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);font-size:20px">Hoje</div>
+        <h3>Influência</h3>
+        <p>Seus princípios vivem no Agile, no DevOps e em qualquer metodologia que valorize iteração e gestão de riscos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ABA 9 — REFERÊNCIAS
+═══════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-referencias">
+  <div class="container">
+    <p class="section-tag">Referências</p>
+    <h2 class="section-title">Fontes e <span>referências</span></h2>
+    <p class="lead">Fontes utilizadas na pesquisa e elaboração deste trabalho.</p>
+
+    <div class="ref-list">
+      <div class="ref-item">
+        <div class="ref-num">1</div>
+        <div>
+          <a href="https://diversedaily.com/exploring-the-spiral-model-combining-waterfall-and-iterative-development-with-emphasis-on-risk-management-and-incremental-releases/" target="_blank">
+            Diverse Daily — Exploring the Spiral Model: Combining Waterfall and Iterative Development with Emphasis on Risk Management
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">2</div>
+        <div>
+          <a href="https://en.wikipedia.org/wiki/Spiral_model" target="_blank">
+            Wikipedia — Spiral Model (en.wikipedia.org/wiki/Spiral_model)
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">3</div>
+        <div>
+          <a href="https://blog.logrocket.com/product-management/risk-driven-development-with-the-spiral-model/" target="_blank">
+            LogRocket Blog — Risk-driven development with the Spiral Model
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">4</div>
+        <div>
+          <a href="https://www.ibm.com/br-pt/case-studies/ibm-on-ibm-security-verify" target="_blank">
+            IBM Case Study — IBM on IBM: Security Verify (ibm.com/br-pt)
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">5</div>
+        <div>
+          <a href="https://dl.acm.org/doi/10.1145/257734.257745" target="_blank">
+            Cusumano &amp; Selby — How Microsoft Builds Software · Communications of the ACM, 1997
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">6</div>
+        <div>
+          <a href="https://ntrs.nasa.gov/citations/19990064487" target="_blank">
+            NASA Technical Reports — Spiral Development na ISS (ntrs.nasa.gov)
+          </a>
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-num">7</div>
+        <div>
+          <a href="https://www.geeksforgeeks.org/software-engineering/software-engineering-spiral-model/" target="_blank">
+            GeeksforGeeks — Software Engineering: Spiral Model (com exemplo Microsoft)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════════════ -->
+<footer>
+  <span>SENAI — Curso Técnico em Desenvolvimento de Sistemas · Grupo 1 · 2026</span>
+  <span>Prof. Fred Aguiar · UC: Banco de Dados</span>
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
